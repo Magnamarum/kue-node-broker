@@ -1,5 +1,6 @@
 import * as express from "express";
 import * as cors from "cors";
+var bodyParser = require("body-parser");
 
 // setup
 const EventEmitter = require('events');
@@ -95,13 +96,19 @@ router.on("message", function () {
 
 //app
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());;
 app.use(cors());
 
-app.get("/", async (req, res) => {
-  res.send("");
-});
+// app.get("/", async (req, res) => {
+//   res.send("");
+// });
 
-app.post("/", async (req, res) => {});
+app.post("/nkue", async (req, res) => {
+  let payload = req.body;  
+  queue.create(payload.type, JSON.stringify(payload)).save();
+  res.sendStatus(200);
+});
 
 app.listen(3000, function() {
   console.log("listening on port 3000!");
