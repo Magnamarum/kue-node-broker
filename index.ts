@@ -1,5 +1,5 @@
-// import * as express from "express";
-// import * as cors from "cors";
+import * as express from "express";
+import * as cors from "cors";
 
 // setup
 const EventEmitter = require('events');
@@ -82,8 +82,9 @@ router.on("message", function () {
   } 
   else if(payload.type == 'Response'){
     
-    console.log('Received response to job '+payload.uid+' of type '+payload.type+' and body '+JSON.stringify(payload.body));    
-    router.send([apiIdentity, "", JSON.stringify(payload)]);
+    console.log('Received response to job '+payload.uid+' of type '+payload.type+' and body '+JSON.stringify(payload.body));
+    
+  router.send([apiIdentity, "", JSON.stringify(payload)]);
   }
   else {
     console.log('Queueing job of type '+payload.type+' and body '+payload.body);
@@ -92,16 +93,16 @@ router.on("message", function () {
 
 });
 
-// app
-// const app = express();
-// app.use(cors());
+//app
+const app = express();
+app.use(cors());
 
-// app.get("/", async (req, res) => {
-//   res.send("");
-// });
+app.get("/", async (req, res) => {
+  res.send("");
+});
 
-// app.post("/", async (req, res) => {});
+app.post("/", async (req, res) => {});
 
-// app.listen(3000, function() {
-//   console.log("listening on port 3000!");
-// });
+app.listen(3000, function() {
+  console.log("listening on port 3000!");
+});
